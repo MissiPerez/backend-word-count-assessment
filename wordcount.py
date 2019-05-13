@@ -52,6 +52,44 @@ import sys
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 
+def print_words(filename):
+    word_count = {}
+    file_open = open(filename)
+    word_list = file_open.read().split()
+    for word in word_list:
+        word = word.lower()
+        #print(word, word_list.count(word))
+        if not word in word_count:
+            word_count[word] = 1
+        else:
+            word_count[word] = word_count[word] + 1
+    for word in word_count:
+        print word + ':' + str(word_count[word])     
+    #print word_count 
+    return 
+
+def second_item(item):
+    return item[1]
+
+def print_top(filename):
+    word_count = {}
+    file_open = open(filename)
+    word_list = file_open.read().lower().split()
+    for word in word_list:
+        #print(word, word_list.count(word))
+        if not word in word_count:
+            word_count[word] = 1
+        else:
+            word_count[word] += 1    
+    
+    word_list = []
+    for key, value in word_count.items():
+        word_list.append([key, value])
+    word_list.sort(key=second_item, reverse=True)
+
+    print word_list[:20]
+
+
 
 def main():
     if len(sys.argv) != 3:
@@ -60,6 +98,7 @@ def main():
 
     option = sys.argv[1]
     filename = sys.argv[2]
+    # print(sys.argv)
     if option == '--count':
         print_words(filename)
     elif option == '--topcount':
